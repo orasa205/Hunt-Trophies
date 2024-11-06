@@ -55,7 +55,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private int obstacleSpeed = 10;  // ความเร็วของอุปสรรคเริ่มต้น
     private final int[] trophiesRequired = {3, 5,7};
     int lastTrophyX = 0;
-//    private Clip trophySound;
     private Clip backgroundMusic;
     private Clip trophySound;
     private Clip loseSound;
@@ -309,10 +308,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
     
     private void loadSounds() {
-        backgroundMusic = loadSound("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Miniproject 181025671736\\Miniproject\\src\\main\\resources\\imges\\game.wav"); // เสียงพื้นหลัง
-        trophySound = loadSound("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Miniproject 181025671736\\Miniproject\\src\\main\\resources\\imges\\purchase.wav");         // เสียงถ้วยรางวัล
-        loseSound = loadSound("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Miniproject 181025671736\\Miniproject\\src\\main\\resources\\imges\\lose.wav");             // เสียงแพ้
-        winSound = loadSound("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Miniproject 181025671736\\Miniproject\\src\\main\\resources\\imges\\winning.wav");               // เสียงชนะ
+        backgroundMusic = loadSound("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Miniproject\\src\\main\\resources\\imges\\game.wav"); // เสียงพื้นหลัง
+        trophySound = loadSound("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Miniproject\\src\\main\\resources\\imges\\purchase.wav");         // เสียงถ้วยรางวัล
+        loseSound = loadSound("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Miniproject\\src\\main\\resources\\imges\\lose.wav");             // เสียงแพ้
+        winSound = loadSound("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Miniproject\\src\\main\\resources\\imges\\winning.wav");               // เสียงชนะ
     }
     
     private Clip loadSound(String filePath) {
@@ -368,6 +367,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     private void askToProceedToNextLevel() {
+        stopBackgroundMusic(); // หยุดเสียงเพลงพื้นหลังก่อนแสดงกล่องยืนยัน
         // ถ้าผู้เล่นไปยังด่านถัดไป
         
         int response = JOptionPane.showConfirmDialog(this,
@@ -378,28 +378,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         if (response == JOptionPane.YES_OPTION) {
             currentLevel++;
             setBackgroundImage(); // เปลี่ยนภาพพื้นหลังตามด่าน
+            obstacleSpeed = 10 + (currentLevel - 1) * 5;  // เพิ่มความเร็ว 5 หน่วยต่อระดับ
             restartGame(); // เริ่มด่านใหม่
+            startBackgroundMusic(); // เล่นเสียงเพลงพื้นหลังใหม่หลังจากเริ่มด่าน
         } else {
             restartGame(); // หากไม่ต้องการไปด่านต่อ ให้ชนะเกมปัจจุบันแทน
-        }
-    }
-
-    private void increaseSpeed() {
-        // ปรับความเร็วอุปสรรคตามระดับ
-        switch (currentLevel) {
-            case 1:
-                obstacleSpeed = 10;  // ความเร็วระดับ 1
-                break;
-            case 2:
-                obstacleSpeed = 15;  // ความเร็วระดับ 2
-                break;
-            case 3:
-                obstacleSpeed = 20; // ความเร็วระดับ 3
-                break;
-            // เพิ่มกรณีสำหรับระดับอื่น ๆ ตามต้องการ
-            default:
-                obstacleSpeed = 10; // ค่าเริ่มต้น
-                break;
+             startBackgroundMusic(); // เล่นเสียงเพลงพื้นหลังใหม่หลังจากเริ่มด่าน
         }
     }
 

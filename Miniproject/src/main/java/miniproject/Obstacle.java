@@ -88,12 +88,4 @@ public class Obstacle {
     this.speed = speed; // ตั้งค่าความเร็ว
 }
 
- public void setSpeedByLevel(int level) {
-        switch (level) {
-            case 1: setSpeed(10); break;
-            case 2: setSpeed(15); break;
-            case 3: setSpeed(18); break;
-            default: setSpeed(10); break; // กำหนดความเร็วเริ่มต้น
-        }
-    }
 }
